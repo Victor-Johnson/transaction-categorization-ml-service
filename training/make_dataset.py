@@ -29,6 +29,9 @@ UK_ENTITIES = {
     "other": ["AMAZON", "EBAY", "ARGOS", "CURRYS", "BOOTS", "SUPERDRUG", "HMRC", "NHS"],
 }
 
+PAYMENT_PREFIXES = [
+    "VISA", "MASTERCARD", "CARD", "POS", "CONTACTLESS", "DIRECT DEBIT", "BACS", "FPS", "SO", "STO"
+]
 # Bank-style templates by label
 TEMPLATES = {
     "groceries": [
@@ -68,10 +71,7 @@ TEMPLATES = {
     ],
 }
 
-# common banking prefixes/rails to inject realism
-PAYMENT_PREFIXES = [
-    "VISA", "MASTERCARD", "CARD", "POS", "CONTACTLESS", "DIRECT DEBIT", "BACS", "FPS", "SO", "STO"
-]
+
 
 def noiseify(text: str) -> str:
     t = re.sub(r"\s+", " ", text).strip()
@@ -79,7 +79,7 @@ def noiseify(text: str) -> str:
     # abbreviations
     t = re.sub(r"\bPAYMENT\b", random.choice(["PAYMENT", "PMT"]), t, flags=re.IGNORECASE)
 
-    # sometimes add a prefix
+    
     if random.random() < 0.25:
         t = f"{random.choice(PAYMENT_PREFIXES)} {t}"
 
@@ -113,10 +113,22 @@ def make_desc(label: str, item: str) -> str:
     base = template.format(entity=entity, item=str(item))
     return noiseify(base)
 
+# def main(inp="data/retail_10k.csv", out="data/transactions_v2.csv"):
+#     p = Path(inp)
+#     if not p.exists() or p.stat().st_size == 0:
+#         raise ValueError(f"Missing/empty input file: {p.resolve()}")
+
+
 def main(inp="data/retail_10k.csv", out="data/transactions_v2.csv"):
-    p = Path(inp)
-    if not p.exists() or p.stat().st_size == 0:
-        raise ValueError(f"Missing/empty input file: {p.resolve()}")
+    project_root = Path(__file__).resolve().parent.parent
+    inp_path = (project_root / inp).resolve() if not Path(inp).is_absolute() else Path(inp).resolve()
+    out_path = (project_root / out).resolve() if not Path(out).is_absolute() else Path(out).resolve()
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if not inp_path.exists() or inp_path.stat().st_size == 0:
+        raise ValueError(f"Missing/empty input file: {inp_path}")
+
 
     df = pd.read_csv(inp)
 

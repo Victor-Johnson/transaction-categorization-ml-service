@@ -1,0 +1,14 @@
+{
+  "model": "tfidf + logistic_regression",
+  "labels": [
+    "dining",
+    "groceries",
+    "housing",
+    "other",
+    "subscriptions",
+    "transportation",
+    "utilities"
+  ],
+  "frozen_at_utc": "2026-01-16T13:20:31.862066Z",
+  "artifact_dir": "artifacts/20260116_132006"
+}

@@ -1,0 +1,12 @@
+{
+  "model": "tfidf + logistic_regression",
+  "labels": [
+    "dining",
+    "groceries",
+    "housing",
+    "other",
+    "subscriptions",
+    "transportation",
+    "utilities"
+  ]
+}
