@@ -79,7 +79,7 @@ def noiseify(text: str) -> str:
     # abbreviations
     t = re.sub(r"\bPAYMENT\b", random.choice(["PAYMENT", "PMT"]), t, flags=re.IGNORECASE)
 
-    # sometimes add a prefix
+    
     if random.random() < 0.25:
         t = f"{random.choice(PAYMENT_PREFIXES)} {t}"
 
@@ -120,7 +120,6 @@ def make_desc(label: str, item: str) -> str:
 
 
 def main(inp="data/retail_10k.csv", out="data/transactions_v2.csv"):
-    # Always resolve output relative to project root (parent of training/)
     project_root = Path(__file__).resolve().parent.parent
     inp_path = (project_root / inp).resolve() if not Path(inp).is_absolute() else Path(inp).resolve()
     out_path = (project_root / out).resolve() if not Path(out).is_absolute() else Path(out).resolve()
