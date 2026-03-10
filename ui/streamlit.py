@@ -1,7 +1,7 @@
 import streamlit as st 
 import requests
 
-API = st.secerets.get("API_URL","http://localhost:80000")
+API = st.secerets.get("API_URL","http://localhost:8000")
 st.title(" UK Transaction Categorization")
 
 
